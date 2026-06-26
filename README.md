@@ -1,15 +1,17 @@
-# shaktidb-project
+# Smart Hostel Utility & Maintenance Intelligence System using ShaktiDB
 
-# Smart Hostel Utility & Maintenance Intelligence System
+## Overview
+This project is being developed as part of the IITM Parivartan ShaktiDB Mini Project.
 
-## Project Overview
-This project is being developed as part of the IITM Parivartan ShaktiDB Course.
+The system allows hostel students to report utility and maintenance issues such as water, electricity, WiFi, plumbing, and cleanliness. Hostel staff can manage complaints, update their status, and monitor resolution progress. The system also generates analytics on complaint frequency and average resolution time to improve maintenance efficiency.
 
-The system allows hostel students to:
-- Report water, electricity, WiFi, and other utility issues.
-- Track complaint status.
-- Enable hostel staff to manage complaints.
-- Generate analytics on complaint categories and resolution times.
+## Features
+- Student complaint registration
+- Complaint status tracking
+- Staff complaint management
+- ShaktiDB database integration
+- Analytics dashboard
+- Resolution time reports
 
 ## Tech Stack
 - Python
@@ -18,5 +20,5 @@ The system allows hostel students to:
 - psycopg2
 - Git & GitHub
 
-## Project Status
-Currently under development.
+## Status
+🚧 Project initialization completed. Development in progress.

@@ -21,4 +21,4 @@ The system allows hostel students to report utility and maintenance issues such 
 - Git & GitHub
 
 ## Status
-🚧 Project initialization completed. Development in progress.
+Development in progress.

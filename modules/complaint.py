@@ -7,8 +7,12 @@ class ComplaintService:
         description = description.lower()
 
         high_keywords = [
-            "fire", "spark", "short circuit",
-            "flood", "leak", "electric shock"
+            "fire",
+            "spark",
+            "short circuit",
+            "electric shock",
+            "flood",
+            "leak"
         ]
 
         medium_keywords = [
@@ -31,7 +35,7 @@ class ComplaintService:
 
     def report_complaint(self, student_id):
 
-        print("\n===== Report Complaint =====")
+        print("\n========== REPORT COMPLAINT ==========")
 
         print("1. Water")
         print("2. Electricity")
@@ -50,12 +54,12 @@ class ComplaintService:
         choice = input("Choose Category: ")
 
         if choice not in category_map:
-            print("Invalid category.")
+            print("\n❌ Invalid category.")
             return
 
         category = category_map[choice]
 
-        description = input("Describe the issue: ")
+        description = input("Describe the issue: ").strip()
 
         priority = self.get_priority(description)
 
@@ -77,7 +81,7 @@ class ComplaintService:
                     description,
                     priority
                 )
-                VALUES (%s,%s,%s,%s)
+                VALUES (%s, %s, %s, %s)
                 RETURNING complaint_id
                 """,
                 (
@@ -98,7 +102,7 @@ class ComplaintService:
                     old_status,
                     new_status
                 )
-                VALUES (%s,%s,%s)
+                VALUES (%s, %s, %s)
                 """,
                 (
                     complaint_id,
@@ -109,13 +113,62 @@ class ComplaintService:
 
             connection.commit()
 
-            print("\nComplaint Submitted Successfully!")
+            print("\n✅ Complaint Submitted Successfully!")
             print(f"Complaint ID : {complaint_id}")
             print(f"Priority     : {priority}")
 
         except Exception as e:
             connection.rollback()
-            print(e)
+            print(f"\n❌ Error: {e}")
+
+        finally:
+            cursor.close()
+            connection.close()
+
+    def view_my_complaints(self, student_id):
+
+        connection = get_connection()
+
+        if connection is None:
+            return
+
+        cursor = connection.cursor()
+
+        try:
+
+            cursor.execute(
+                """
+                SELECT
+                    complaint_id,
+                    category,
+                    priority,
+                    status,
+                    created_at
+                FROM complaints
+                WHERE student_id = %s
+                ORDER BY created_at DESC
+                """,
+                (student_id,)
+            )
+
+            complaints = cursor.fetchall()
+
+            if not complaints:
+                print("\nNo complaints found.")
+                return
+
+            print("\n========== MY COMPLAINTS ==========\n")
+
+            for complaint in complaints:
+                print(f"Complaint ID : {complaint[0]}")
+                print(f"Category     : {complaint[1]}")
+                print(f"Priority     : {complaint[2]}")
+                print(f"Status       : {complaint[3]}")
+                print(f"Created At   : {complaint[4]}")
+                print("-" * 40)
+
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
 
         finally:
             cursor.close()

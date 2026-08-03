@@ -130,7 +130,8 @@ class StudentService:
                 complaint.report_complaint(student_id)
 
             elif choice == "2":
-                print("\n View My Complaints module will be implemented next.")
+                complaint = ComplaintService()
+                complaint.view_my_complaints(student_id)
 
             elif choice == "3":
                 print("\n Logged out successfully.")
